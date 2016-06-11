@@ -1,5 +1,5 @@
 defmodule NameFinder do
-  import Cli
+  require Cli
 
   def main(argv) do
     Cli.run(argv)

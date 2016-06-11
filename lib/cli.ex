@@ -28,6 +28,6 @@ defmodule Cli do
 
   def find_names(options) do
     names = Name.where(options)
-    IO.puts(names)
+    IO.inspect(names)
   end
 end

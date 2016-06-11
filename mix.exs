@@ -16,6 +16,6 @@ defmodule NameFinder.Mixfile do
   end
 
   defp deps do
-    []
+    [{:envy, "~> 0.0.2"}]
   end
 end
