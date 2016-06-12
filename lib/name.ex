@@ -4,22 +4,23 @@ defmodule Name do
     |> beginning_with
   end
 
-  defp beginning_with(begins_with) do
-    begins_with
-    |> filtered_by_begins_with
+  defp beginning_with(prefixes) do
+    prefixes
+    |> filtered_by_prefix
     |> extract_names
   end
 
-  defp filtered_by_begins_with(begins_with) do
+  defp filtered_by_prefix(prefixes) do
+    longest_prefix_length = Enum.map(prefixes, &String.length/1) |> Enum.max
     Enum.filter_map(
-      grouped_by_begins_with(begins_with),
-      fn(names_by_letter) -> begins_with?(begins_with, names_by_letter) end,
+      grouped_by_prefix(longest_prefix_length),
+      fn(names_by_letter) -> starts_with?(prefixes, names_by_letter) end,
       fn(filtered_names) -> elem(filtered_names, 1) end
     )
   end
 
-  defp grouped_by_begins_with(_begins_with) do
-    Enum.group_by(all_names, &String.first/1)
+  defp grouped_by_prefix(prefix_length) do
+    Enum.group_by(all_names, fn(row) -> String.slice(name(row), 0, prefix_length) end)
   end
 
   defp extract_names(collection) do
@@ -33,17 +34,22 @@ defmodule Name do
     rows
   end
 
-  defp begins_with?(_letters, {nil, [""]}) do
+  defp starts_with?(_letters, {nil, [""]}) do
     false
   end
 
-  defp begins_with?(letters, names_by_letter) do
-    letter = elem(names_by_letter, 0)
-    Enum.member?(letters, letter)
+  defp starts_with?(prefixes, names_by_letter) do
+    elem(names_by_letter, 0)
+    |> String.downcase
+    |> String.starts_with?(Enum.map(prefixes, &String.downcase/1))
   end
 
-  defp names(item) do
-    Enum.map(item, fn(foo) -> name(foo) end)
+  defp names(items) do
+    Enum.map(items, fn(item) -> name(item) end)
+  end
+
+  defp name("") do
+    ""
   end
 
   defp name(item) do
