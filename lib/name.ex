@@ -1,30 +1,95 @@
 defmodule Name do
   def where(options) do
-    options[:begins_with]
-    |> beginning_with
-  end
-
-  defp beginning_with(prefixes) do
-    prefixes
-    |> filtered_by_prefix
+    all_names
+    |> female(options[:female])
+    |> male(options[:male])
+    |> beginning_with(options[:begins_with])
     |> extract_names
   end
 
-  defp filtered_by_prefix(prefixes) do
+  defp female(collection, nil) do
+    collection
+  end
+
+  defp female(collection, true) do
+    Enum.filter_map(
+      grouped_by_sex(collection),
+      &female?/1,
+      fn(filtered_names) -> elem(filtered_names, 1) end
+    )
+    |> List.flatten
+  end
+
+  defp male(collection, nil) do
+    collection
+  end
+
+  defp male(collection, true) do
+    Enum.filter_map(
+      grouped_by_sex(collection),
+      &male?/1,
+      fn(filtered_names) -> elem(filtered_names, 1) end
+    )
+    |> List.flatten
+  end
+
+  defp grouped_by_sex(collection) do
+    Enum.group_by(collection, fn(row) -> sex(String.split(row, ",")) end)
+  end
+
+  defp female?(names_by_sex) do
+    sex = elem(names_by_sex, 0)
+    sex == "female" || sex == "both"
+  end
+
+  defp male?(names_by_sex) do
+    sex = elem(names_by_sex, 0)
+    sex == "male" || sex == "both"
+  end
+
+  defp sex([""]) do
+    nil
+  end
+
+  defp sex(row) do
+    male = Enum.at(row, 2)
+    female = Enum.at(row, 3)
+
+    cond do
+      male == "Yes" && female == "Yes" ->
+        "both"
+      male == "Yes" ->
+        "male"
+      female == "Yes" ->
+        "female"
+    end
+  end
+
+  defp beginning_with(collection, prefixes) do
+    prefixes
+    |> filtered_by_prefix(collection)
+  end
+
+  defp filtered_by_prefix(nil, collection) do
+    collection
+  end
+
+  defp filtered_by_prefix(prefixes, collection) do
     longest_prefix_length = Enum.map(prefixes, &String.length/1) |> Enum.max
     Enum.filter_map(
-      grouped_by_prefix(longest_prefix_length),
+      grouped_by_prefix(collection, longest_prefix_length),
       fn(names_by_letter) -> starts_with?(prefixes, names_by_letter) end,
       fn(filtered_names) -> elem(filtered_names, 1) end
     )
+    |> List.flatten
   end
 
-  defp grouped_by_prefix(prefix_length) do
-    Enum.group_by(all_names, fn(row) -> String.slice(name(row), 0, prefix_length) end)
+  defp grouped_by_prefix(collection, prefix_length) do
+    Enum.group_by(collection, fn(row) -> String.slice(name(row), 0, prefix_length) end)
   end
 
   defp extract_names(collection) do
-    Enum.flat_map(collection, fn(item) -> names(item) end)
+    Enum.map(collection, &name/1)
   end
 
   defp all_names do
@@ -42,10 +107,6 @@ defmodule Name do
     elem(names_by_letter, 0)
     |> String.downcase
     |> String.starts_with?(Enum.map(prefixes, &String.downcase/1))
-  end
-
-  defp names(items) do
-    Enum.map(items, fn(item) -> name(item) end)
   end
 
   defp name("") do
