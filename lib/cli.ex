@@ -9,7 +9,12 @@ defmodule Cli do
   def parse_args(argv) do
     {parsed_switches, _remaining_args, _invalid_options} = OptionParser.parse(
       argv,
-      strict: [begins_with: :string, male: :boolean, female: :boolean],
+      strict: [
+        begins_with: :string,
+        male: :boolean,
+        female: :boolean,
+        does_not_contain: :string,
+      ],
     )
     parsed_switches
   end
@@ -21,6 +26,7 @@ defmodule Cli do
   def transform_options(options) do
     %{
       begins_with: String.split(options[:begins_with], ","),
+      does_not_contain: String.split(options[:does_not_contain], ","),
       female: options[:female],
       male: options[:male],
     }

@@ -4,6 +4,7 @@ defmodule Name do
     |> female(options[:female])
     |> male(options[:male])
     |> beginning_with(options[:begins_with])
+    |> does_not_contain(options[:does_not_contain])
     |> extract_names
   end
 
@@ -70,8 +71,25 @@ defmodule Name do
     |> filtered_by_prefix(collection)
   end
 
+  defp does_not_contain(collection, nil) do
+    collection
+  end
+
+  defp does_not_contain(collection, excluded) do
+    excluded
+    |> filtered_by_excluded(collection)
+  end
+
   defp filtered_by_prefix(nil, collection) do
     collection
+  end
+
+  defp filtered_by_excluded(excluded, collection) do
+    Enum.filter_map(
+      collection,
+      fn(row) -> does_not_contain?(excluded, name(row)) end,
+      fn(filtered_name) -> filtered_name end
+    )
   end
 
   defp filtered_by_prefix(prefixes, collection) do
@@ -86,6 +104,18 @@ defmodule Name do
 
   defp grouped_by_prefix(collection, prefix_length) do
     Enum.group_by(collection, fn(row) -> String.slice(name(row), 0, prefix_length) end)
+  end
+
+  defp does_not_contain?(excluded, name) do
+    downcased_name = String.downcase(name)
+    name_contains_excludes = String.contains?(downcased_name, Enum.map(excluded, &String.downcase/1))
+
+    cond do
+      name_contains_excludes == false ->
+        true
+      name_contains_excludes == true ->
+        false
+    end
   end
 
   defp extract_names(collection) do

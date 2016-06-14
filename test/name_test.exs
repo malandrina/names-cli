@@ -1,6 +1,24 @@
 defmodule NameTest do
   use ExUnit.Case, async: true
 
+  test "excludes names containing undesired substrings" do
+    options = %{does_not_contain: ["ndr"]}
+    expected_names = [
+      "Lakshman",
+      "Parvati",
+      "Rama",
+      "Saraswati",
+      "Shiva",
+      "Sita",
+      "Vishnu",
+      "",
+    ]
+
+    names = Name.where(options)
+
+    assert names == expected_names
+  end
+
   test "returns female and unisex names when 'female' option is present" do
     options = %{female: true}
     expected_names = ["Shiva", "Rama", "Indra", "Sita", "Saraswati", "Parvati"]
@@ -37,8 +55,8 @@ defmodule NameTest do
     assert names == expected_names
   end
 
-  test "filters by sex and prefix" do
-    options = %{female: true, begins_with: ["l"]}
+  test "filters by sex, prefix, and undesired substrings" do
+    options = %{male: true, begins_with: ["i"], does_not_contain: ["ndr"]}
     expected_names = []
 
     names = Name.where(options)
