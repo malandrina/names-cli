@@ -59,6 +59,8 @@ defmodule Name do
     cond do
       male == "Yes" && female == "Yes" ->
         "both"
+      male != "Yes" && female != "Yes" ->
+        "both"
       male == "Yes" ->
         "male"
       female == "Yes" ->

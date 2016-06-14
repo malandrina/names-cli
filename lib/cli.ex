@@ -38,6 +38,6 @@ defmodule Cli do
 
   def find_names(options) do
     names = Name.where(options)
-    IO.inspect(names)
+    IO.puts(Enum.join(names, "\n"))
   end
 end
