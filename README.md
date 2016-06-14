@@ -1,6 +1,11 @@
 # NameFinder
 
-**TODO: Add description**
+Example usage:
+
+```
+./name_finder --male --begins-with "a,c,d,g,h,j,l,m,n,o,s,t,v"
+--does-not-contain "dh,bh,gh,th,ph,ndr,jit,dutt,tya,lya" > result.txt
+```
 
 ## Installation
 
