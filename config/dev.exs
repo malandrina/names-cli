@@ -1,3 +1,3 @@
 use Mix.Config
 
-config :name_finder, path_to_names: System.get_env("PATH_TO_NAMES")
+config :name_finder, data_path: System.get_env("DATA_PATH")

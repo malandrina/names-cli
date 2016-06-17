@@ -86,14 +86,6 @@ defmodule Name do
     collection
   end
 
-  defp filtered_by_excluded(excluded, collection) do
-    Enum.filter_map(
-      collection,
-      fn(row) -> does_not_contain?(excluded, name(row)) end,
-      fn(filtered_name) -> filtered_name end
-    )
-  end
-
   defp filtered_by_prefix(prefixes, collection) do
     longest_prefix_length = Enum.map(prefixes, &String.length/1) |> Enum.max
     Enum.filter_map(
@@ -102,6 +94,14 @@ defmodule Name do
       fn(filtered_names) -> elem(filtered_names, 1) end
     )
     |> List.flatten
+  end
+
+  defp filtered_by_excluded(excluded, collection) do
+    Enum.filter_map(
+      collection,
+      fn(row) -> does_not_contain?(excluded, name(row)) end,
+      fn(filtered_name) -> filtered_name end
+    )
   end
 
   defp grouped_by_prefix(collection, prefix_length) do
@@ -125,7 +125,7 @@ defmodule Name do
   end
 
   defp all_names do
-    filepath = Application.get_env(:name_finder, :path_to_names)
+    filepath = Application.get_env(:name_finder, :data_path)
     {:ok, contents } = File.read(filepath)
     [_header | rows ] = String.split(contents, "\n")
     rows

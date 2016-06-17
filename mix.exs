@@ -12,6 +12,7 @@ defmodule NameFinder.Mixfile do
   end
 
   def application do
+    Envy.auto_load
     [applications: [:logger]]
   end
 
