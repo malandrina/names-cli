@@ -1,5 +1,5 @@
-defmodule Name do
-  def where(options) do
+defmodule FilterNames do
+  def run(options) do
     all_names
     |> female(options[:female])
     |> male(options[:male])

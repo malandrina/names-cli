@@ -1,5 +1,5 @@
 defmodule NamesCli do
-  require Cli
+  import Cli, only: [run: 1]
 
   def main(argv) do
     Cli.run(argv)
