@@ -1,4 +1,4 @@
-# NameFinder
+# Names CLI
 
 Example usage:
 
