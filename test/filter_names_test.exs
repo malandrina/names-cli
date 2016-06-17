@@ -3,20 +3,10 @@ defmodule FilterNamesTest do
 
   test "excludes names containing undesired substrings" do
     options = %{does_not_contain: ["ndr"]}
-    expected_names = [
-      "Lakshman",
-      "Parvati",
-      "Rama",
-      "Saraswati",
-      "Shiva",
-      "Sita",
-      "Vishnu",
-      "",
-    ]
 
     names = FilterNames.run(options)
 
-    assert names == expected_names
+    refute Enum.member?(names, "Indra")
   end
 
   test "returns female and unisex names when 'female' option is present" do
