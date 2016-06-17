@@ -10,11 +10,11 @@ use Mix.Config
 
 # You can configure for your application as:
 #
-#     config :name_finder, key: :value
+#     config :names_cli, key: :value
 #
 # And access this configuration in your application as:
 #
-#     Application.get_env(:name_finder, :key)
+#     Application.get_env(:names_cli, :key)
 #
 # Or configure a 3rd-party app:
 #

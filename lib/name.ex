@@ -125,7 +125,7 @@ defmodule Name do
   end
 
   defp all_names do
-    filepath = Application.get_env(:name_finder, :data_path)
+    filepath = Application.get_env(:names_cli, :data_path)
     {:ok, contents } = File.read(filepath)
     [_header | rows ] = String.split(contents, "\n")
     rows

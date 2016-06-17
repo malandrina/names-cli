@@ -3,7 +3,7 @@
 Example usage:
 
 ```
-./name_finder --male --begins-with "a,c,d,g,h,j,l,m,n,o,s,t,v"
+./names_cli --male --begins-with "a,c,d,g,h,j,l,m,n,o,s,t,v"
 --does-not-contain "dh,bh,gh,th,ph,ndr,jit,dutt,tya,lya" > result.txt
 ```
 
@@ -11,15 +11,15 @@ Example usage:
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
 
-  1. Add name_finder to your list of dependencies in `mix.exs`:
+  1. Add names_cli to your list of dependencies in `mix.exs`:
 
         def deps do
-          [{:name_finder, "~> 0.0.1"}]
+          [{:names_cli, "~> 0.0.1"}]
         end
 
-  2. Ensure name_finder is started before your application:
+  2. Ensure names_cli is started before your application:
 
         def application do
-          [applications: [:name_finder]]
+          [applications: [:names_cli]]
         end
 

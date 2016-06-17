@@ -1,4 +1,4 @@
-defmodule NameFinder do
+defmodule NamesCli do
   require Cli
 
   def main(argv) do

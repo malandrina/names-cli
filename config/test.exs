@@ -1,3 +1,3 @@
 use Mix.Config
 
-config :name_finder, data_path: "test/fixtures/names.csv"
+config :names_cli, data_path: "test/fixtures/names.csv"
