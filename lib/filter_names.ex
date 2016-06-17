@@ -5,7 +5,7 @@ defmodule FilterNames do
     |> FilterBySex.exclude_male_names(options[:female_only])
     |> beginning_with(options[:begins_with])
     |> does_not_contain(options[:does_not_contain])
-    |> extract_names
+    |> Enum.map(&Name.name/1)
   end
 
   defp beginning_with(collection, prefixes) do
@@ -39,29 +39,17 @@ defmodule FilterNames do
   defp filtered_by_excluded(excluded, collection) do
     Enum.filter_map(
       collection,
-      fn(row) -> does_not_contain?(excluded, name(row)) end,
+      fn(row) -> Name.does_not_contain?(row, excluded) end,
       fn(filtered_name) -> filtered_name end
     )
   end
 
   defp grouped_by_prefix(collection, prefix_length) do
-    Enum.group_by(collection, fn(row) -> String.slice(name(row), 0, prefix_length) end)
-  end
-
-  defp does_not_contain?(excluded, name) do
-    downcased_name = String.downcase(name)
-    name_contains_excludes = String.contains?(downcased_name, Enum.map(excluded, &String.downcase/1))
-
-    cond do
-      name_contains_excludes == false ->
-        true
-      name_contains_excludes == true ->
-        false
-    end
+    Enum.group_by(collection, fn(row) -> Name.prefix(row, 0, prefix_length) end)
   end
 
   defp extract_names(collection) do
-    Enum.map(collection, &name/1)
+    Enum.map(collection, &Name.name/1)
   end
 
   defp all_names do
@@ -79,14 +67,5 @@ defmodule FilterNames do
     elem(names_by_letter, 0)
     |> String.downcase
     |> String.starts_with?(Enum.map(prefixes, &String.downcase/1))
-  end
-
-  defp name("") do
-    ""
-  end
-
-  defp name(item) do
-    [_letter, name, _tail] = String.split item, ",", parts: 3
-    name
   end
 end
