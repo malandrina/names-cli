@@ -6,7 +6,7 @@ defmodule Cli do
     |> find_names
   end
 
-  def parse_args(argv) do
+  defp parse_args(argv) do
     {parsed_switches, _remaining_args, _invalid_options} = OptionParser.parse(
       argv,
       strict: [
@@ -19,25 +19,33 @@ defmodule Cli do
     parsed_switches
   end
 
-  def transform_options([]) do
+  defp transform_options([]) do
     []
   end
 
-  def transform_options(options) do
+  defp transform_options(options) do
     %{
-      begins_with: String.split(options[:begins_with], ","),
-      does_not_contain: String.split(options[:does_not_contain], ","),
+      begins_with: split_on_commas(options[:begins_with]),
+      does_not_contain: split_on_commas(options[:does_not_contain]),
       female: options[:female],
       male: options[:male],
     }
   end
 
-  def find_names([]) do
+  defp find_names([]) do
     IO.puts "No arguments given"
   end
 
-  def find_names(options) do
+  defp find_names(options) do
     names = Name.where(options)
     IO.puts(Enum.join(names, "\n"))
+  end
+
+  defp split_on_commas(nil) do
+    nil
+  end
+
+  defp split_on_commas(string) do
+    String.split(string, ",")
   end
 end
