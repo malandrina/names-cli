@@ -3,7 +3,7 @@
 Example usage:
 
 ```
-./names_cli --male --begins-with "a,c,d,g,h,j,l,m,n,o,s,t,v"
+./names_cli --male-only --begins-with "a,c,d,g,h,j,l,m,n,o,s,t,v"
 --does-not-contain "dh,bh,gh,th,ph,ndr,jit,dutt,tya,lya" > result.txt
 ```
 

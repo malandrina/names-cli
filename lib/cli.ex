@@ -18,8 +18,8 @@ defmodule Cli do
   defp permitted_options do
     [
       begins_with: :string,
-      male: :boolean,
-      female: :boolean,
+      male_only: :boolean,
+      female_only: :boolean,
       does_not_contain: :string,
     ]
   end
@@ -29,8 +29,8 @@ defmodule Cli do
     %{
       begins_with: split(options[:begins_with], ","),
       does_not_contain: split(options[:does_not_contain], ","),
-      female: options[:female],
-      male: options[:male],
+      female_only: options[:female_only],
+      male_only: options[:male_only],
     }
   end
 

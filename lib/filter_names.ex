@@ -1,8 +1,8 @@
 defmodule FilterNames do
   def run(options) do
     all_names
-    |> FilterBySex.exclude_female_names(options[:male])
-    |> FilterBySex.exclude_male_names(options[:female])
+    |> FilterBySex.exclude_female_names(options[:male_only])
+    |> FilterBySex.exclude_male_names(options[:female_only])
     |> beginning_with(options[:begins_with])
     |> does_not_contain(options[:does_not_contain])
     |> extract_names
