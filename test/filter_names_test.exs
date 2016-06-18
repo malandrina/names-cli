@@ -1,6 +1,16 @@
 defmodule FilterNamesTest do
   use ExUnit.Case, async: true
 
+  test "excludes names with undesired endings" do
+    options = %{does_not_end_with: ["ndra", "ati"]}
+
+    names = FilterNames.run(options)
+
+    refute Enum.member?(names, "Parvati")
+    refute Enum.member?(names, "Saraswati")
+    refute Enum.member?(names, "Indra")
+  end
+
   test "excludes names containing undesired substrings" do
     options = %{does_not_contain: ["ndr"]}
 
@@ -45,9 +55,14 @@ defmodule FilterNamesTest do
     assert names == expected_names
   end
 
-  test "filters by sex, prefix, and undesired substrings" do
-    options = %{male_only: true, begins_with: ["i"], does_not_contain: ["ndr"]}
-    expected_names = []
+  test "filters by sex, prefix, undesired substrings, and undesired endings" do
+    options = %{
+      female_only: true,
+      begins_with: ["s","p"],
+      does_not_contain: ["arv"],
+      does_not_end_with: ["ati"],
+    }
+    expected_names = ["Sita", "Shiva"]
 
     names = FilterNames.run(options)
 

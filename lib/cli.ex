@@ -21,6 +21,7 @@ defmodule Cli do
       male_only: :boolean,
       female_only: :boolean,
       does_not_contain: :string,
+      does_not_end_with: :string,
     ]
   end
 
@@ -29,6 +30,7 @@ defmodule Cli do
     %{
       begins_with: split(options[:begins_with], ","),
       does_not_contain: split(options[:does_not_contain], ","),
+      does_not_end_with: split(options[:does_not_end_with], ","),
       female_only: options[:female_only],
       male_only: options[:male_only],
     }

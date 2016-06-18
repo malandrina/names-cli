@@ -4,6 +4,7 @@ defmodule FilterNames do
     |> FilterBySex.exclude_female_names(options[:male_only])
     |> FilterBySex.exclude_male_names(options[:female_only])
     |> FilterByPrefix.run(options[:begins_with])
+    |> FilterBySuffix.run(options[:does_not_end_with])
     |> FilterByContains.run(options[:does_not_contain])
     |> Enum.map(&Name.name/1)
   end

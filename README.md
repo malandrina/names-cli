@@ -4,7 +4,8 @@ Example usage:
 
 ```
 ./names_cli --male-only --begins-with "a,c,d,g,h,j,l,m,n,o,s,t,v"
---does-not-contain "dh,bh,gh,th,ph,ndr,jit,dutt,tya,lya" > result.txt
+--does-not-contain "dh,bh,gh,th,ph,ndr,dutt,tya,lya" --does-not-end-with
+"jat,jit,ndra" > result.txt
 ```
 
 ## Installation

@@ -15,6 +15,11 @@ defmodule Name do
     |> String.slice(begin, prefix_length)
   end
 
+  def suffix(row, suffix_length) do
+    name(row)
+    |> String.slice(-suffix_length, suffix_length)
+  end
+
   def sex(""), do: nil
   def sex(row) do
     split_row = String.split(row, ",")
