@@ -34,6 +34,12 @@ defmodule Name do
     name
   end
 
+  def name_and_meanings(""), do: ""
+  def name_and_meanings(row) do
+    [_letter, name, _, _, _, meanings, _tail] = String.split row, ",", parts: 7
+    "#{name} - #{meanings}"
+  end
+
   defp sex("Yes", "Yes"), do: both_sexes
   defp sex(_, "Yes"), do: female_sex
   defp sex("Yes", _), do: male_sex

@@ -6,9 +6,9 @@ defmodule FilterNamesTest do
 
     names = FilterNames.run(options)
 
-    refute Enum.member?(names, "Parvati")
-    refute Enum.member?(names, "Saraswati")
-    refute Enum.member?(names, "Indra")
+    refute Enum.member?(names, "Parvati - Daughter of the mountain.")
+    refute Enum.member?(names, "Saraswati - Wisdom")
+    refute Enum.member?(names, "Indra - Supreme god.")
   end
 
   test "excludes names containing undesired substrings" do
@@ -16,12 +16,19 @@ defmodule FilterNamesTest do
 
     names = FilterNames.run(options)
 
-    refute Enum.member?(names, "Indra")
+    refute Enum.member?(names, "Indra - Supreme god.")
   end
 
   test "returns female and unisex names when 'female_only' option is present" do
     options = %{female_only: true}
-    expected_names = ["Indra", "Parvati", "Rama", "Saraswati", "Shiva", "Sita"]
+    expected_names = [
+      "Indra - Supreme god.",
+      "Parvati - Daughter of the mountain.",
+      "Rama - Follower of the Father",
+      "Saraswati - Wisdom",
+      "Shiva - God of the moon.",
+      "Sita - Goddess of the land.",
+    ]
 
     names = FilterNames.run(options)
 
@@ -30,7 +37,13 @@ defmodule FilterNamesTest do
 
   test "returns male and unisex names when 'male_only' option is present" do
     options = %{male_only: true}
-    expected_names = ["Indra", "Lakshman", "Rama", "Shiva", "Vishnu"]
+    expected_names = [
+      "Indra - Supreme god.",
+      "Lakshman - Prosperous",
+      "Rama - Follower of the Father",
+      "Shiva - God of the moon.",
+      "Vishnu - Protector of the worlds.",
+    ]
 
     names = FilterNames.run(options)
 
@@ -39,7 +52,10 @@ defmodule FilterNamesTest do
 
   test "returns names beginning with given uppercase letters" do
     options = %{begins_with: ["Sh","V"]}
-    expected_names = ["Shiva","Vishnu"]
+    expected_names = [
+      "Shiva - God of the moon.",
+      "Vishnu - Protector of the worlds.",
+    ]
 
     names = FilterNames.run(options)
 
@@ -48,7 +64,10 @@ defmodule FilterNamesTest do
 
   test "returns names beginning with given lowercase letters" do
     options = %{begins_with: ["sh","v"]}
-    expected_names = ["Shiva","Vishnu"]
+    expected_names = [
+      "Shiva - God of the moon.",
+      "Vishnu - Protector of the worlds.",
+    ]
 
     names = FilterNames.run(options)
 
@@ -62,7 +81,7 @@ defmodule FilterNamesTest do
       does_not_contain: ["arv"],
       does_not_end_with: ["ati"],
     }
-    expected_names = ["Shiva", "Sita"]
+    expected_names = ["Shiva - God of the moon.", "Sita - Goddess of the land."]
 
     names = FilterNames.run(options)
 
