@@ -10,6 +10,10 @@ defmodule Name do
     )
   end
 
+  def is_alternative_spelling?(row) do
+    String.contains?(row, "Refer to:")
+  end
+
   def prefix(row, begin, prefix_length) do
     name(row)
     |> String.slice(begin, prefix_length)

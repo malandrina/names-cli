@@ -6,6 +6,7 @@ defmodule FilterNames do
     |> FilterByPrefix.run(options[:begins_with])
     |> FilterBySuffix.run(options[:does_not_end_with])
     |> FilterByContains.run(options[:does_not_contain])
+    |> FilterAlternativeSpellings.run
     |> Enum.map(&Name.name_and_meanings/1)
     |> Enum.sort
   end

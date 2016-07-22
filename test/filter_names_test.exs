@@ -1,6 +1,12 @@
 defmodule FilterNamesTest do
   use ExUnit.Case, async: true
 
+  test "excludes alternative spellings" do
+    names = FilterNames.run(%{})
+
+    refute Enum.member?(names, "Vishnoo - Protector of the worlds.")
+  end
+
   test "excludes names with undesired endings" do
     options = %{does_not_end_with: ["ndra", "ati"]}
 
