@@ -21,7 +21,7 @@ defmodule FilterNamesTest do
 
   test "returns female and unisex names when 'female_only' option is present" do
     options = %{female_only: true}
-    expected_names = ["Shiva", "Rama", "Indra", "Sita", "Saraswati", "Parvati"]
+    expected_names = ["Indra", "Parvati", "Rama", "Saraswati", "Shiva", "Sita"]
 
     names = FilterNames.run(options)
 
@@ -30,7 +30,7 @@ defmodule FilterNamesTest do
 
   test "returns male and unisex names when 'male_only' option is present" do
     options = %{male_only: true}
-    expected_names = ["Shiva", "Rama", "Indra", "Vishnu", "Lakshman"]
+    expected_names = ["Indra", "Lakshman", "Rama", "Shiva", "Vishnu"]
 
     names = FilterNames.run(options)
 
@@ -62,7 +62,7 @@ defmodule FilterNamesTest do
       does_not_contain: ["arv"],
       does_not_end_with: ["ati"],
     }
-    expected_names = ["Sita", "Shiva"]
+    expected_names = ["Shiva", "Sita"]
 
     names = FilterNames.run(options)
 

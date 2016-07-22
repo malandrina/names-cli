@@ -3,9 +3,9 @@
 Example usage:
 
 ```
-./names_cli --male-only --begins-with "a,c,d,g,h,j,l,m,n,o,s,t,v"
+./names_cli --male-only --begins-with "a,c,d,g,j,l,m,n,o,s,t,v"
 --does-not-contain "dh,bh,gh,th,ph,ndr,dutt,tya,lya" --does-not-end-with
-"jat,jit,ndra" > result.txt
+"att,atta,esh,jat,jit,lal,man,ndra,oob,ya" > result.txt
 ```
 
 ## Installation

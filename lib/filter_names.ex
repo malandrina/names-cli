@@ -7,6 +7,7 @@ defmodule FilterNames do
     |> FilterBySuffix.run(options[:does_not_end_with])
     |> FilterByContains.run(options[:does_not_contain])
     |> Enum.map(&Name.name/1)
+    |> Enum.sort
   end
 
   defp all_names do
