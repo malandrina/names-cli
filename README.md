@@ -1,4 +1,4 @@
-# Names CLI
+## Names CLI
 
 Example usage:
 
@@ -8,7 +8,7 @@ Example usage:
 "att,atta,esh,jat,jit,lal,man,ndra,oob,ya" > result.txt
 ```
 
-## Installation
+### Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
 
